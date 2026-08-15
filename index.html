@@ -124,6 +124,36 @@
         #hero-page {
             background: radial-gradient(circle at center, #1a0a0c 0%, #050505 100%);
         }
+        #hero-page::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 45, 85, 0.18),
+        transparent 70%
+    );
+
+    filter: blur(30px);
+    animation: heroLightMove 8s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes heroLightMove {
+    0% {
+        transform: translate(-35vw, -20vh);
+    }
+
+    50% {
+        transform: translate(20vw, 10vh);
+    }
+
+    100% {
+        transform: translate(35vw, -15vh);
+    }
+}
 
         .hero-title {
             font-family: 'Playfair Display', serif;
@@ -175,6 +205,7 @@
             color: #fff;
             box-shadow: 0 0 50px var(--accent);
         }
+        
 
         /* --- SLIDER MESSAGE CARD --- */
         .slider-card {
@@ -252,47 +283,182 @@
         #celebration-page.bright {
             background: radial-gradient(circle at center, #2a0a0e 0%, #0a0a0b 100%);
         }
+ #celebration-page.bright::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at 50% -10%,
+            rgba(255, 220, 130, 0.32),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 180, 50, 0.15),
+            transparent 60%
+        );
+
+    animation: spotlightReveal 3s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes spotlightReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
         /* --- FAIRY LIGHTS --- */
-        .fairy-lights-container {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 150px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 2s ease;
-            z-index: 5;
-        }
+  /* ===== CINEMATIC FAIRY LIGHTS ===== */
 
-        .wire-svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            fill: none;
-            stroke: #222;
-            stroke-width: 2;
-        }
+.fairy-lights-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+    z-index: 5;
 
-        .bulb-teardrop {
-            position: absolute;
-            width: 16px;
-            height: 24px;
-            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
-            background: #444;
-            transform-origin: top center;
-            transform: translate(-50%, 0);
-            box-shadow: none;
-            transition: background 1s, box-shadow 1s;
-        }
+    /* Cinematic light atmosphere */
+    filter: drop-shadow(0 0 20px rgba(255, 190, 70, 0.25));
+}
 
-        .bright .bulb-teardrop {
-            background: radial-gradient(circle at 30% 30%, #fff, var(--bulb-warm) 60%, #b8860b);
-            box-shadow: 0 0 15px var(--bulb-glow), 0 0 30px var(--bulb-glow);
-            animation: flicker var(--d) infinite alternate;
-        }
+.wire-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+
+    stroke: rgba(255, 220, 130, 0.25);
+    stroke-width: 1.5;
+
+    filter:
+        drop-shadow(0 0 4px rgba(255, 210, 100, 0.5))
+        drop-shadow(0 0 12px rgba(255, 180, 50, 0.25));
+}
+/* Dark bulbs before turning ON */
+
+.bulb-teardrop {
+    position: absolute;
+    width: 13px;
+    height: 20px;
+    border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+
+    background: #181818;
+
+    transform-origin: top center;
+    transform: translate(-50%, 0);
+
+    box-shadow:
+        0 0 2px rgba(255,255,255,0.05);
+
+    transition:
+        background 1.5s ease,
+        box-shadow 1.5s ease,
+        transform 0.5s ease;
+}
+
+/* ===== LIGHTS ON ===== */
+
+.bright .bulb-teardrop {
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #ffffff 0%,
+            #fff9dc 18%,
+            #ffd45c 45%,
+            #e6a51d 75%,
+            #8f5c00 100%
+        );
+
+    box-shadow:
+        0 0 5px #fff,
+        0 0 12px #fff1a8,
+        0 0 25px #ffd45c,
+        0 0 45px rgba(255, 190, 50, 0.65),
+        0 0 80px rgba(255, 160, 30, 0.25);
+
+    animation: cinematicFlicker var(--d) infinite alternate;
+}
+
+/* ===== CINEMATIC FLICKER ===== */
+
+@keyframes cinematicFlicker {
+
+    0% {
+        opacity: 0.65;
+        filter: brightness(0.8);
+    }
+
+    20% {
+        opacity: 1;
+        filter: brightness(1.15);
+    }
+
+    45% {
+        opacity: 0.85;
+        filter: brightness(0.95);
+    }
+
+    70% {
+        opacity: 1;
+        filter: brightness(1.25);
+    }
+
+    100% {
+        opacity: 0.9;
+        filter: brightness(1);
+    }
+}
+#celebration-page.bright::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 190, 60, 0.15),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 20% 40%,
+            rgba(255, 45, 85, 0.08),
+            transparent 40%
+        );
+
+    animation: ambientGlow 5s ease-in-out infinite alternate;
+
+    z-index: 2;
+}
+
+@keyframes ambientGlow {
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+.glass-container {
+    position: relative;
+    z-index: 10;
+}
 
         /* --- REALISTIC BALLOONS --- */
         .balloon {
@@ -373,15 +539,61 @@
         }
 
         .curtain-panel {
-            position: absolute;
-            top: 0;
-            width: 51%;
-            height: 100%;
-            background: repeating-linear-gradient(to right, var(--royal-red), #4a0000 10%);
-            z-index: 20;
-            transition: transform 2.5s cubic-bezier(0.645, 0.045, 0.355, 1);
-            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
-        }
+    position: absolute;
+    top: 0;
+    width: 51%;
+    height: 100%;
+
+    background:
+        repeating-linear-gradient(
+            to right,
+            #6e0000 0%,
+            #4a0000 8%,
+            #850000 16%,
+            #3d0000 24%,
+            #6e0000 32%
+        );
+
+    z-index: 20;
+
+    transition:
+        transform 2.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    box-shadow:
+        inset 0 0 100px rgba(0, 0, 0, 0.8),
+        inset 0 0 30px rgba(255, 180, 60, 0.08);
+
+    overflow: hidden;
+}
+
+.curtain-panel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150px;
+
+    width: 120px;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 215, 100, 0.18),
+        transparent
+    );
+
+    animation: curtainLight 4s infinite;
+}
+
+@keyframes curtainLight {
+    from {
+        left: -150px;
+    }
+
+    to {
+        left: 120%;
+    }
+}
 
         .curtain-left {
             left: 0;
@@ -394,12 +606,28 @@
         }
 
         .open .curtain-left {
-            transform: translateX(-100%) skewY(-5deg);
-        }
+    transform: translateX(-100%) skewY(-5deg) scale(1.05);
+}
 
-        .open .curtain-right {
-            transform: translateX(100%) skewY(5deg);
-        }
+.open .curtain-right {
+    transform: translateX(100%) skewY(5deg) scale(1.05);
+}
+
+.open .secret-content {
+    animation: cinematicReveal 2.8s ease forwards;
+}
+
+@keyframes cinematicReveal {
+    from {
+        transform: scale(1.08);
+        filter: blur(8px);
+    }
+
+    to {
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
 
         .secret-content {
             height: 100%;
@@ -411,16 +639,65 @@
         }
 
         .message-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: clamp(20px, 5vw, 50px);
-            border-radius: 30px;
-            max-width: 700px;
-            width: 90%;
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.72),
+            rgba(0, 0, 0, 0.72)
+        ),
+        url("photo-collage.png.png");
 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: 1px solid rgba(255, 45, 85, 0.4);
+
+    padding: 60px 8vw;
+
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+
+    border-radius: 0;
+
+    backdrop-filter: blur(10px);
+    position: relative;
+
+    box-shadow: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.message-card::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 45, 85, 0.18),
+        transparent 65%
+    );
+
+    filter: blur(35px);
+    z-index: -1;
+
+    animation: messageGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes messageGlow {
+    from {
+        opacity: 0.4;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
         /* --- MEMORY GALLERY FIXES --- */
         #gallery-page {
             background: #050505;
@@ -438,6 +715,16 @@
             margin-bottom: 60px;
             text-shadow: 0 0 20px var(--accent-glow);
         }
+        .gallery-subtitle {
+    text-align: center;
+    margin-top: -40px;
+    margin-bottom: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+}
 
         .gallery-grid {
             display: grid;
@@ -458,6 +745,7 @@
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
+        
 
         .memory-card:hover {
             transform: translateY(-15px) scale(1.03);
@@ -510,29 +798,44 @@
         .memory-card:hover .hover-message {
             transform: translateY(0);
         }
+        
 
         /* Sparkle over gallery */
-        .gallery-sparkle {
-            position: absolute;
-            pointer-events: none;
-            background: white;
-            border-radius: 50%;
-            animation: sparkleAnim 2s infinite;
-        }
+       .gallery-sparkle {
+    position: fixed;
+    pointer-events: none;
 
-        @keyframes sparkleAnim {
+    width: 4px;
+    height: 4px;
 
-            0%,
-            100% {
-                opacity: 0;
-                transform: scale(0);
-            }
+    background: white;
+    border-radius: 50%;
 
-            50% {
-                opacity: 0.8;
-                transform: scale(1);
-            }
-        }
+    box-shadow:
+        0 0 5px white,
+        0 0 12px rgba(255, 220, 120, 0.9),
+        0 0 25px rgba(255, 200, 80, 0.5);
+
+    animation:
+        sparkleAnim 2s ease-in-out infinite,
+        sparkleFloat 5s ease-in-out infinite;
+
+    z-index: 2;
+}
+
+@keyframes sparkleFloat {
+    0% {
+        transform: translateY(20px) scale(0.7);
+    }
+
+    50% {
+        transform: translateY(-25px) scale(1);
+    }
+
+    100% {
+        transform: translateY(20px) scale(0.7);
+    }
+}
 
         @media (max-width: 600px) {
             .gallery-grid {
@@ -543,6 +846,200 @@
                 height: 350px;
             }
         }
+        
+        /* --- CINEMATIC FINAL COUNTDOWN --- */
+
+.final-scene {
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #180609 0%, #000 75%);
+}
+
+.countdown-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.countdown-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.8rem, 2vw, 1.1rem);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 25px;
+}
+
+.countdown-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 18vw, 12rem);
+    color: white;
+    line-height: 1;
+    text-shadow:
+        0 0 20px var(--accent),
+        0 0 60px var(--accent-glow);
+    animation: countdownPulse 1s ease-in-out;
+}
+
+@keyframes countdownPulse {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+
+    40% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+.final-reveal {
+    display: none;
+    text-align: center;
+    animation: finalReveal 2.5s ease forwards;
+}
+
+.final-reveal h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent-glow);
+    margin-bottom: 25px;
+}
+
+.final-reveal p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: white;
+    margin: 12px 0;
+}
+
+.final-reveal .bag-text {
+    margin-top: 35px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.75);
+}
+
+@keyframes finalReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.85) translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+/* ===== CINEMATIC HERO INTRO ===== */
+
+.hero-intro {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    z-index: 50;
+    animation: introFadeOut 2.5s ease forwards;
+    animation-delay: 2.5s;
+    pointer-events: none;
+}
+
+.hero-intro-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    max-width: 800px;
+    padding: 20px;
+    opacity: 0;
+    animation: introText 2.5s ease forwards;
+}
+
+@keyframes introText {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(10px);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.05);
+        filter: blur(5px);
+    }
+}
+
+@keyframes introFadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* Hero cinematic entrance */
+
+.hero-title,
+.hero-sub,
+.hero-page-btn {
+    opacity: 0;
+    animation: heroEntrance 1.5s ease forwards;
+}
+
+.hero-title {
+    animation-delay: 3s;
+}
+
+.hero-sub {
+    animation-delay: 3.3s;
+}
+
+.hero-page-btn {
+    animation-delay: 3.6s;
+}
+
+@keyframes heroEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
     </style>
 </head>
 
@@ -550,6 +1047,13 @@
 
     <!-- HERO SECTION -->
     <section id="hero-page" class="page active">
+        <div class="hero-intro">
+    <div class="hero-intro-text">
+        Some moments are meant to be remembered...
+        <br><br>
+        And some people make them unforgettable.
+    </div>
+</div>
         <div id="particle-container"
             style="position: absolute; width: 100%; height: 100%; top:0; left:0; pointer-events: none;"></div>
         <h1 class="hero-title">Happy Birthday, Nagajothi</h1>
@@ -607,12 +1111,16 @@
                         style="font-family: 'Dancing Script'; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--accent); margin-bottom: 20px;">
                         My Dearest Joo♥️,</h2>
                     <p style="font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.8; color: rgba(255,255,255,0.8);">
-                        Today is special because it’s all about you 💫
-                        There’s something really nice and genuine about the way you make people smile and feel comfortable around you.
-                        Honestly, having you in my life is something I really value.
-                        I hope this year brings you lots of happiness, peaceful moments, and everything you’ve been wishing for 💙
-                        Stay the same… that’s already more than enough 🫶✨
+                        Today is special because it’s all about youuu 💓🎂🥳💙✨
+                        There’s something really nice and genuine about the way you make people smile 😄🌸 and feel comfortable around you 🫶🏻💙. Honestly, having you in my life is something I really value and I’m genuinely grateful for it 🥹✨🤍.
+                        I hope this year brings you lots and lots of happiness 🫠💖, peaceful moments 🌿🕊️, beautiful memories 📸✨, and everything you’ve been wishing for 🌟💫. May every little thing you hope for slowly find its way to you 🥰🌷💙.
+                        And most importantly… I really hope our friendship stays like this forever 🫂💙♾️. No matter how much life changes, how busy things get, or where life takes us 🌍✨, I hope we always stay connected 🤝🏻💫 and continue making the same stupid jokes 😂🤣, having random conversations at random times 😭😂, sharing our little moments 🫶🏻📸, and creating memories that we’ll look back on and smile about someday 🥹💙✨.
+                        I genuinely hope this friendship isn’t just for a phase or a few years… I hope it stays with us for a lifetime 🫂💙♾️🌍. Through every chapter, every change, every up and down , I hope we’ll still be there for each other just like we are now 🤍✨. I will be there for youhh at every situation🩶🥰🧿!!
+                        Stay the same… because honestly, you’re already more than enough just the way you are 🥹💙🫶🏻✨.
+                     Countless memories 📸💫, endless laughs 😂💖, random conversations 🌙💬, and a friendship that lasts forever♥️🫂♾️✨ Loveee youuhhh soo muchh jooo🫂💗🧿!!
                     </p>
+                    <p style="font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.8; color: rgba(255,255,255,0.8);"><b>Once Again Happiestt Birthday nayeee! 💗🥳✨Keep smiling, keep shining, and keep being youuu! 🌟🦋💙🫶🏻</b>
+</p>
                     <button class="btn-neon" style="margin-top: 40px; animation: none;"
                         onclick="transitionTo('gallery-page')">Our Memories</button>
                 </div>
@@ -628,21 +1136,23 @@
         </div>
 
         <h2 class="gallery-title">Moments in Time</h2>
+        <p class="gallery-subtitle">
+         <b>Countless memories♾️</b></p>
         <div class="gallery-grid">
             <!-- Memory 1 -->
             <div class="memory-card">
-                <img src="IMG-20260131-WA0019.jpg" alt="Memory"
+                <img src="Image.png" alt="Memory"
                     class="memory-image">
                 <div class="memory-hover-overlay">
-                    <p class="hover-message">Too many laughs, too many memories💙</p>
+                    <p class="hover-message">From strangers to best friends🥰♥️</p>
                 </div>
             </div>
             <!-- Memory 2 -->
             <div class="memory-card">
-                <img src="IMG_E0967.jpg" alt="Memory"
+                <img src="IMG-20260131-WA0019.jpg" alt="Memory"
                     class="memory-image">
                 <div class="memory-hover-overlay">
-                    <p class="hover-message">From strangers to best friends♥️</p>
+                    <p class="hover-message">Just the right kind of person.🤗🤍</p>
                 </div>
             </div>
             <!-- Memory 3 -->
@@ -650,7 +1160,7 @@
                 <img src="IMG_1056.jpg" alt="Memory"
                     class="memory-image">
                 <div class="memory-hover-overlay">
-                    <p class="hover-message">One of my favorite people🫂</p>
+                    <p class="hover-message">One of my favorite people💞🫂</p>
                 </div>
             </div>
             <!-- Memory 4 -->
@@ -658,7 +1168,7 @@
                 <img src="IMG_1772.jpg" alt="Memory"
                     class="memory-image">
                 <div class="memory-hover-overlay">
-                    <p class="hover-message">Always bringing good vibes💗</p>
+                    <p class="hover-message">Always bringing good vibes😌💗</p>
                 </div>
             </div>
             <!-- Memory 5 -->
@@ -666,25 +1176,60 @@
                 <img src="file_0000000083e871fa869434c8390615ba.png" alt="Memory"
                     class="memory-image">
                 <div class="memory-hover-overlay">
-                    <p class="hover-message">Thanks for being there always🫠</p>
+                    <p class="hover-message">Thanks for being there always🧿♥️</p>
                 </div>
             </div>
             <!-- Memory 6 -->
             <div class="memory-card">
-                <img src="Image.png" alt="Memory"
+                <img src="IMG_E0967.jpg" alt="Memory"
                     class="memory-image">
                 <div class="memory-hover-overlay">
-                    <p class="hover-message">Life is more fun with you😜</p>
+                    <p class="hover-message">Too many laughs, too many memories♾️💙</p>
                 </div>
             </div>
         </div>
-        <div style="text-align: center; padding: 100px 0;">
-            <button class="btn-neon" onclick="location.reload()">Replay The Magic</button>
+        <div class="final-scene">
+
+    <div id="countdown" class="countdown-box">
+
+        <div class="countdown-text">
+            Your final surprise begins in...
         </div>
+
+        <div id="countdown-number" class="countdown-number">
+            10
+        </div>
+
+    </div>
+
+
+    <div id="final-reveal" class="final-reveal">
+
+        <h2>One Last Thing... 👀</h2>
+
+<p>
+    You thought the surprise was over?
+</p>
+
+<p class="bag-text">
+    Not quite...
+</p>
+
+<p class="bag-text">
+    <b>Your final surprise is waiting where you least expect it. 🎁</b>
+</p>
+
+<p class="bag-text">
+    <b>Check your bag. 🫣💙</b>
+</p>
+
+    </div>
+
+</div>
     </section>
 
     <audio id="birthday-audio" loop>
-        <source src="96_bgm_tamil.mp3" type="audio/mpeg">
+        <source src="Let The Celebration Begin.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -702,6 +1247,8 @@
             }
             if (pageId === 'gallery-page') {
                 startGalleryEffects();
+                startCountdown();
+                
             }
         }
 
@@ -848,6 +1395,45 @@ audio.play().then(() => {
                 container.appendChild(bulb);
             }
         }
+        function startCountdown() {
+
+    let count = 10;
+
+    const number = document.getElementById("countdown-number");
+    const countdown = document.getElementById("countdown");
+    const reveal = document.getElementById("final-reveal");
+
+    if (!number || !countdown || !reveal) return;
+
+    number.innerText = count;
+
+    const timer = setInterval(() => {
+
+        count--;
+
+        if (count >= 1) {
+
+            number.innerText = count;
+
+            // Restart animation
+            number.style.animation = "none";
+            void number.offsetWidth;
+            number.style.animation = "countdownPulse 1s ease-in-out";
+
+        } else {
+
+            clearInterval(timer);
+
+            // Hide countdown
+            countdown.style.display = "none";
+
+            // Show final surprise
+            reveal.style.display = "block";
+
+        }
+
+    }, 1000);
+}
 
         window.onload = () => {
             initFairyLights();
